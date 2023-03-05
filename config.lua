@@ -31,6 +31,19 @@ lvim.plugins = {
   { "ThePrimeagen/vim-be-good",
     config = function() require("nightfox").setup {} end,
   },
+  {
+    "klen/nvim-test",
+    config = function() require('nvim-test').setup{
+      termOpts = {
+        direction = "vertical",   -- terminal's direction ("horizontal"|"vertical"|"float")
+        width = 72,               -- terminal's width (for vertical|float)
+        height = 15,              -- terminal's height (for horizontal|float)
+        go_back = true,          -- return focus to original window after executing
+        stopinsert = "auto",      -- exit from insert mode (true|false|"auto")
+        keep_one = true,          -- keep only one terminal for testing
+      },
+    } end,
+  },
 }
 
 -- settings/options
@@ -47,8 +60,14 @@ lvim.leader = "space"
 
 -- sid mappings
 lvim.keys.normal_mode["<S-e>"] = ":m-2<CR>=="
-lvim.keys.normal_mode["<S-h>"] = ":m+1<CR>=="
+lvim.keys.normal_mode["<S-n>"] = ":m+1<CR>=="
 lvim.keys.normal_mode["<S-u>"] = "<C-r>"
+
+lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
+lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+
+lvim.keys.normal_mode["<leader>r"] = ":TestNearest<CR>"
+lvim.keys.normal_mode["<C-r>"] = ":TestLast<CR>"
 
 lvim.keys.normal_mode["<CR>"] = "o<ESC>"
 
@@ -59,9 +78,11 @@ lvim.keys.normal_mode["k"] = "j"
 lvim.keys.normal_mode["h"] = "l"
 lvim.keys.normal_mode["l"] = "h"
 
+lvim.keys.normal_mode["<leader>o"] = ":NvimTreeFocus<CR>"
+
 lvim.builtin.terminal.open_mapping = "<c-'>"
--- lvim.keys.normal_mode["<S-l>"] = ":BufferLineCycleNext<CR>"
--- lvim.keys.normal_mode["<S-h>"] = ":BufferLineCyclePrev<CR>"
+
+
 -- unmap a default keymapping
 -- vim.keymap.del("n", "<C-Up>")
 -- override a default keymapping
@@ -120,6 +141,7 @@ lvim.builtin.treesitter.ensure_installed = {
   "typescript",
   "tsx",
   "css",
+  "ruby",
   "rust",
   "java",
   "yaml",
